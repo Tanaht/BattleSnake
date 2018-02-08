@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity implements
         SearchGameFragment.OnFragmentInteractionListener,
         GameboardFragment.OnFragmentInteractionListener,
         BoardFragment.OnFragmentInteractionListener,
-        DirectionFragment.OnFragmentInteractionListener{
+        DirectionFragment.OnFragmentInteractionListener {
     private HomeFragment home;
     private String Tag = "fr.istic.mmm.battlesnake.MainActivity";
 
