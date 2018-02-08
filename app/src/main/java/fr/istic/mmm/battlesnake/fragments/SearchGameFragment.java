@@ -1,16 +1,10 @@
 package fr.istic.mmm.battlesnake.fragments;
 
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -19,33 +13,27 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import fr.istic.mmm.battlesnake.R;
 
-
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link HomeFragment.OnFragmentInteractionListener} interface
+ * {@link SearchGameFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link HomeFragment#newInstance} factory method to
+ * Use the {@link SearchGameFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class HomeFragment extends Fragment {
+public class SearchGameFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    private static final String Tag = "fragments.HomeFragment";
-
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
-    @BindView(R.id.playButton) Button playButton;
-
-
     private OnFragmentInteractionListener mListener;
 
-    public HomeFragment() {
+    public SearchGameFragment() {
         // Required empty public constructor
     }
 
@@ -55,11 +43,11 @@ public class HomeFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment HomeFragment.
+     * @return A new instance of fragment SearchGameFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static HomeFragment newInstance(String param1, String param2) {
-        HomeFragment fragment = new HomeFragment();
+    public static SearchGameFragment newInstance(String param1, String param2) {
+        SearchGameFragment fragment = new SearchGameFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -69,10 +57,7 @@ public class HomeFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-
-
         super.onCreate(savedInstanceState);
-        setHasOptionsMenu(true);
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -80,52 +65,13 @@ public class HomeFragment extends Fragment {
     }
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.home_menu, menu);
-        super.onCreateOptionsMenu(menu, inflater);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        FragmentManager manager = getFragmentManager();
-        FragmentTransaction transaction = manager.beginTransaction();
-
-        transaction.replace(R.id.base_layout, new AboutFragment());
-        switch (item.getItemId()) {
-            case R.id.about:
-                transaction.replace(R.id.base_layout, new AboutFragment());
-                break;
-            case R.id.profile:
-                transaction.replace(R.id.base_layout, new ProfileFragment());
-                break;
-            case R.id.ranking:
-                transaction.replace(R.id.base_layout, new RankingFragment());
-                break;
-        }
-
-        transaction.commit();
-        return true;
-    }
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_home, container, false);
+        View view = inflater.inflate(R.layout.fragment_search_game, container, false);
         ButterKnife.bind(this, view);
 
-        playButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.i(Tag,"button play pressed");
 
-                FragmentManager manager = getFragmentManager();
-                FragmentTransaction transaction = manager.beginTransaction();
-
-                transaction.replace(R.id.base_layout, new SearchGameFragment());
-                transaction.commit();
-            }
-        });
-
-        // Inflate the layout for this fragment
+        
         return view;
     }
 

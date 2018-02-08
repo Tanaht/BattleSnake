@@ -2,9 +2,13 @@
     <string name="app_name">Battle Snake</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+    <string name="hello_blank_fragment">hello_blank_fragment</string>
+    <string name="textWaitMatchMaking">Attente d\'un joueur</string>
     <string name="about">A Propos</string>
     <string name="ranking">Classement</string>
     <string name="profile">Profil</string>
     <string name="home">Accueil</string>
+    <string name="textButtonPlay">Jouer</string>
 </resources>
