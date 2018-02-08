@@ -1,10 +1,15 @@
 package fr.istic.mmm.battlesnake.fragments;
 
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -56,6 +61,7 @@ public class AboutFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -68,6 +74,35 @@ public class AboutFragment extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_about, container, false);
     }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.about_menu, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        FragmentManager manager = getFragmentManager();
+        FragmentTransaction transaction = manager.beginTransaction();
+
+        transaction.replace(R.id.base_layout, new AboutFragment());
+        switch (item.getItemId()) {
+            case R.id.about:
+                transaction.replace(R.id.base_layout, new AboutFragment());
+                break;
+            case R.id.profile:
+                transaction.replace(R.id.base_layout, new ProfileFragment());
+                break;
+            case R.id.ranking:
+                transaction.replace(R.id.base_layout, new RankingFragment());
+                break;
+        }
+
+        transaction.commit();
+        return true;
+    }
+
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
