@@ -75,7 +75,10 @@ public class BoardFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_board, container, false);
         ButterKnife.bind(this, view);
 
-        boardView.drawBoard();
+        GameboardFragment parentFragment = (GameboardFragment) getParentFragment();
+
+        parentFragment.setBoardView(boardView);
+
 
         return view;
     }

@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 
 import butterknife.ButterKnife;
 import fr.istic.mmm.battlesnake.R;
+import fr.istic.mmm.battlesnake.view.CustomViewBoard;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -33,6 +34,8 @@ public class GameboardFragment extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+
+    private CustomViewBoard boardView;
 
     public GameboardFragment() {
         // Required empty public constructor
@@ -70,6 +73,8 @@ public class GameboardFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_gameboard, container, false);
         ButterKnife.bind(this, view);
+
+        boardView.drawBoard();
 
         // Inflate the layout for this fragment
         return view;
@@ -114,6 +119,10 @@ public class GameboardFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    public void setBoardView(CustomViewBoard boardView) {
+        this.boardView = boardView;
     }
 
     /**
