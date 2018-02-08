@@ -1,6 +1,3 @@
 <resources>
     <string name="app_name">Battle Snake</string>
-    <string name="about">A Propos</string>
-    <string name="ranking">Classement</string>
-    <string name="profile">Mon Profil</string>
 </resources>
