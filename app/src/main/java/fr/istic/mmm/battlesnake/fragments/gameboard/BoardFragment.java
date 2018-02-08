@@ -1,7 +1,5 @@
-package fr.istic.mmm.battlesnake.fragments;
+package fr.istic.mmm.battlesnake.fragments.gameboard;
 
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
@@ -10,19 +8,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import butterknife.ButterKnife;
 import fr.istic.mmm.battlesnake.R;
-import fr.istic.mmm.battlesnake.fragments.gameboard.GameboardFragment;
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link SearchGameFragment.OnFragmentInteractionListener} interface
+ * {@link BoardFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link SearchGameFragment#newInstance} factory method to
+ * Use the {@link BoardFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class SearchGameFragment extends Fragment {
+public class BoardFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -34,7 +30,7 @@ public class SearchGameFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public SearchGameFragment() {
+    public BoardFragment() {
         // Required empty public constructor
     }
 
@@ -44,11 +40,11 @@ public class SearchGameFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment SearchGameFragment.
+     * @return A new instance of fragment BoardFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static SearchGameFragment newInstance(String param1, String param2) {
-        SearchGameFragment fragment = new SearchGameFragment();
+    public static BoardFragment newInstance(String param1, String param2) {
+        BoardFragment fragment = new BoardFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -68,17 +64,8 @@ public class SearchGameFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_search_game, container, false);
-        ButterKnife.bind(this, view);
-
-        //TODO wait matchmaking
-        FragmentManager manager = getFragmentManager();
-        FragmentTransaction transaction = manager.beginTransaction();
-
-        transaction.replace(R.id.base_layout, new GameboardFragment());
-        transaction.commit();
-
-        return view;
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_board, container, false);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
