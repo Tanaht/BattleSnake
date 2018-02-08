@@ -4,13 +4,8 @@
     android:layout_height="match_parent"
     tools:context="fr.istic.mmm.battlesnake.fragments.gameboard.BoardFragment">
 
-    <android.support.constraint.ConstraintLayout
+    <fr.istic.mmm.battlesnake.view.CustomViewBoard
+        android:id="@+id/boardView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="board" />
-    </android.support.constraint.ConstraintLayout>
-
+        android:layout_height="wrap_content" />
 </FrameLayout>

@@ -1,5 +1,7 @@
 package fr.istic.mmm.battlesnake.fragments.gameboard;
 
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
@@ -8,7 +10,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import fr.istic.mmm.battlesnake.R;
+import fr.istic.mmm.battlesnake.view.CustomViewBoard;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -27,6 +32,9 @@ public class BoardFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+
+
 
     private OnFragmentInteractionListener mListener;
 
@@ -64,8 +72,13 @@ public class BoardFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_board, container, false);
+        View view = inflater.inflate(R.layout.fragment_search_game, container, false);
+        ButterKnife.bind(this, view);
+
+        CustomViewBoard boardView = view.findViewById(R.id.boardView);
+        //boardView.drawBoard();
+
+        return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
