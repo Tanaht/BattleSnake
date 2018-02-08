@@ -33,7 +33,7 @@ public class BoardFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-
+    @BindView(R.id.boardView) CustomViewBoard boardView;
 
 
     private OnFragmentInteractionListener mListener;
@@ -72,11 +72,10 @@ public class BoardFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_search_game, container, false);
+        View view = inflater.inflate(R.layout.fragment_board, container, false);
         ButterKnife.bind(this, view);
 
-        CustomViewBoard boardView = view.findViewById(R.id.boardView);
-        //boardView.drawBoard();
+        boardView.drawBoard();
 
         return view;
     }
