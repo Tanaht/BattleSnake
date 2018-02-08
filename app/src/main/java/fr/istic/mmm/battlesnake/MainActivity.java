@@ -10,12 +10,14 @@ import fr.istic.mmm.battlesnake.fragments.AboutFragment;
 import fr.istic.mmm.battlesnake.fragments.HomeFragment;
 import fr.istic.mmm.battlesnake.fragments.ProfileFragment;
 import fr.istic.mmm.battlesnake.fragments.RankingFragment;
+import fr.istic.mmm.battlesnake.fragments.SearchGameFragment;
 
 public class MainActivity extends AppCompatActivity implements
         HomeFragment.OnFragmentInteractionListener,
         AboutFragment.OnFragmentInteractionListener,
         ProfileFragment.OnFragmentInteractionListener,
-        RankingFragment.OnFragmentInteractionListener {
+        RankingFragment.OnFragmentInteractionListener,
+        SearchGameFragment.OnFragmentInteractionListener{
     private HomeFragment home;
     private String Tag = "fr.istic.mmm.battlesnake.MainActivity";
 
