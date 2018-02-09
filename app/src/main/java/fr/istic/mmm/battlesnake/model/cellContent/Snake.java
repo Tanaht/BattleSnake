@@ -61,13 +61,18 @@ public class Snake implements CellContent{
         }
         directionAct = realDirection;
         cellContentToReturn = nextHeadCell.getCellContent();
-        cellList.add(nextHeadCell);
+        cellList.add(0,nextHeadCell);
         nextHeadCell.setCellContent(this);
         if (!eatApple){
+            cellList.get(cellList.size()-1).setCellContent(new EmptyCell());
             cellList.remove(cellList.size()-1);
         }
         return cellContentToReturn;
     }
 
 
+    @Override
+    public int getColorToDraw() {
+        return snakeColor;
+    }
 }

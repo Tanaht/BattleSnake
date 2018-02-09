@@ -25,9 +25,9 @@ public enum Direction {
                     case BOT:
                         return BOT;
                     case LEFT:
-                        return RIGHT;
-                    case RIGHT:
                         return LEFT;
+                    case RIGHT:
+                        return RIGHT;
                     default:
                         throw new RuntimeException("actual direction of snake is not implemented : "+directionToGo);
                 }

@@ -11,7 +11,9 @@ import android.view.ViewGroup;
 
 import butterknife.ButterKnife;
 import fr.istic.mmm.battlesnake.R;
+import fr.istic.mmm.battlesnake.model.Direction;
 import fr.istic.mmm.battlesnake.model.Game;
+import fr.istic.mmm.battlesnake.model.Player;
 import fr.istic.mmm.battlesnake.view.CustomViewBoard;
 
 /**
@@ -39,6 +41,7 @@ public class GameboardFragment extends Fragment {
     private CustomViewBoard boardView;
 
     private Game game;
+    private Player player;
 
     public GameboardFragment() {
         // Required empty public constructor
@@ -79,7 +82,9 @@ public class GameboardFragment extends Fragment {
 
         //TODO récupéré l'objet game envoyer par le socket
         game = new Game();
-        game.addNewPlayer();
+
+        //TODO récupéré l'objet joueur depuis la socket
+        player = game.addNewPlayer();
         game.addNewPlayer();
 
         boardView.drawBoard(game.getBoardCells());
@@ -91,18 +96,26 @@ public class GameboardFragment extends Fragment {
 
     public void onUpPressed(){
         Log.i(TAG,"up pressed");
+        player.getSnake().move(Direction.TOP,false);
+        boardView.drawBoard(game.getBoardCells());
     }
 
     public void onDownPressed(){
         Log.i(TAG,"down pressed");
+        player.getSnake().move(Direction.BOT,false);
+        boardView.drawBoard(game.getBoardCells());
     }
 
     public void onLeftPressed(){
         Log.i(TAG,"left pressed");
+        player.getSnake().move(Direction.LEFT,false);
+        boardView.drawBoard(game.getBoardCells());
     }
 
     public void onRightPressed(){
         Log.i(TAG,"right pressed");
+        player.getSnake().move(Direction.RIGHT,false);
+        boardView.drawBoard(game.getBoardCells());
     }
 
     // TODO: Rename method, update argument and hook method into UI event

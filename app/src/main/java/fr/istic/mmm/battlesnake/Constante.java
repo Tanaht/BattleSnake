@@ -12,7 +12,7 @@ public class Constante {
     public static final int NUMBER_OF_CELL_WIDTH = 30;
 
     public static final Cell[][] LIST_POSITION_INITIAL_SNAKE = {
-            {new Cell(NUMBER_OF_CELL_WIDTH/2,3),new Cell(NUMBER_OF_CELL_WIDTH/2,4),new Cell(NUMBER_OF_CELL_WIDTH/2,5)},
+            {new Cell(NUMBER_OF_CELL_WIDTH/2,5),new Cell(NUMBER_OF_CELL_WIDTH/2,4),new Cell(NUMBER_OF_CELL_WIDTH/2,3)},
             {new Cell(NUMBER_OF_CELL_WIDTH/2,NUMBER_OF_CELL_HEIGHT-5),new Cell(NUMBER_OF_CELL_WIDTH/2,NUMBER_OF_CELL_HEIGHT-4),new Cell(NUMBER_OF_CELL_WIDTH/2,NUMBER_OF_CELL_HEIGHT-3)}
     };
 
@@ -26,6 +26,8 @@ public class Constante {
 
     public static final int COLOR_WALL = Color.BLACK;
     public static final int COLOR_EMPTY_CELL = Color.WHITE;
+    public static final int COLOR_APPLE = Color.GREEN;
+
 
 
 

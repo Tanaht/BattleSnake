@@ -1,6 +1,10 @@
 package fr.istic.mmm.battlesnake.model;
 
+import java.util.Random;
+
 import fr.istic.mmm.battlesnake.Constante;
+import fr.istic.mmm.battlesnake.model.cellContent.Apple;
+import fr.istic.mmm.battlesnake.model.cellContent.EmptyCell;
 import fr.istic.mmm.battlesnake.model.cellContent.Wall;
 
 
@@ -24,6 +28,17 @@ public class Board {
                 cells[i][j] = cell;
             }
         }
+    }
+
+    public void generateApple(){
+        Random rand = new Random();
+        int randomX = 0;
+        int randomY = 0;
+        while (!(cells[randomX][randomY].getCellContent() instanceof EmptyCell)){
+            randomX = rand.nextInt(Constante.NUMBER_OF_CELL_WIDTH);
+            randomY = rand.nextInt(Constante.NUMBER_OF_CELL_WIDTH);
+        }
+        cells[randomX][randomY].setCellContent(new Apple());
     }
 
 

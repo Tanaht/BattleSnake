@@ -53,13 +53,7 @@ public class CustomViewBoard extends View {
 
         for (int i = 0; i < boardToDraw.length; i++) {
             for (int j = 0; j < boardToDraw[i].length; j++) {
-                if (boardToDraw[i][j].getCellContent() instanceof EmptyCell){
-                    paint.setColor(Constante.COLOR_EMPTY_CELL);
-                }else if (boardToDraw[i][j].getCellContent() instanceof Wall){
-                    paint.setColor(Constante.COLOR_WALL);
-                }else{
-                    paint.setColor(Color.MAGENTA);
-                }
+                paint.setColor(boardToDraw[i][j].getCellContent().getColorToDraw());
 
                 paint.setStyle(Paint.Style.FILL);
                 canvas.drawRect(i*heightRectangleInPixel,

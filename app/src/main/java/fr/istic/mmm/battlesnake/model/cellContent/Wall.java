@@ -1,8 +1,11 @@
 package fr.istic.mmm.battlesnake.model.cellContent;
 
-/**
- * Created by loic on 08/02/18.
- */
+import fr.istic.mmm.battlesnake.Constante;
+
 
 public class Wall implements CellContent{
+    @Override
+    public int getColorToDraw() {
+        return Constante.COLOR_WALL;
+    }
 }
