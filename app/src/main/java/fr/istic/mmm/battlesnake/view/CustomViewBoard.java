@@ -48,8 +48,8 @@ public class CustomViewBoard extends View {
         paint.setStrokeWidth(1);
 
 
-        int heightRectangleInPixel = getHeight()/Constante.NUMBER_OF_CELL_HEIGHT;
-        int widthRectangleInPixel = getWidth()/Constante.NUMBER_OF_CELL_WIDTH;
+        int heightRectangleInPixel = getHeight()/Constante.NUMBER_OF_CELL_HEIGHT -20;
+        int widthRectangleInPixel = getWidth()/Constante.NUMBER_OF_CELL_WIDTH -20;
 
         for (int i = 0; i < boardToDraw.length; i++) {
             for (int j = 0; j < boardToDraw[i].length; j++) {
@@ -72,10 +72,6 @@ public class CustomViewBoard extends View {
 
             }
         }
-
-
-
-
 
     }
 

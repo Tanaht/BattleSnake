@@ -5,6 +5,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import fr.istic.mmm.battlesnake.Constante;
+import fr.istic.mmm.battlesnake.model.cellContent.Apple;
+import fr.istic.mmm.battlesnake.model.cellContent.CellContent;
 import fr.istic.mmm.battlesnake.model.cellContent.Snake;
 
 public class Game {
@@ -50,6 +52,15 @@ public class Game {
         return newPlayer;
     }
 
+    public CellContent moveSnakePlayer(Direction direction, int idPlayer){
+        CellContent cellEaten = players.get(idPlayer).getSnake().move(direction);
+
+
+        if (cellEaten instanceof Apple){
+            board.generateApple();
+        }
+        return cellEaten;
+    }
 
     public void startGame(){
         gameStarted = true;

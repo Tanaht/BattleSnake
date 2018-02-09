@@ -87,6 +87,8 @@ public class GameboardFragment extends Fragment {
         player = game.addNewPlayer();
         game.addNewPlayer();
 
+        game.startGame();
+
         boardView.drawBoard(game.getBoardCells());
 
         // Inflate the layout for this fragment
@@ -96,25 +98,26 @@ public class GameboardFragment extends Fragment {
 
     public void onUpPressed(){
         Log.i(TAG,"up pressed");
-        player.getSnake().move(Direction.TOP,false);
+        game.moveSnakePlayer(Direction.TOP,player.getPlayerId());
         boardView.drawBoard(game.getBoardCells());
     }
 
     public void onDownPressed(){
         Log.i(TAG,"down pressed");
-        player.getSnake().move(Direction.BOT,false);
+        game.moveSnakePlayer(Direction.BOT,player.getPlayerId());
         boardView.drawBoard(game.getBoardCells());
     }
 
     public void onLeftPressed(){
         Log.i(TAG,"left pressed");
-        player.getSnake().move(Direction.LEFT,false);
+        game.moveSnakePlayer(Direction.LEFT,player.getPlayerId());
         boardView.drawBoard(game.getBoardCells());
     }
 
     public void onRightPressed(){
         Log.i(TAG,"right pressed");
-        player.getSnake().move(Direction.RIGHT,false);
+
+        game.moveSnakePlayer(Direction.RIGHT,player.getPlayerId());
         boardView.drawBoard(game.getBoardCells());
     }
 

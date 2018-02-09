@@ -38,7 +38,7 @@ public class Snake implements CellContent{
         return player;
     }
 
-    public CellContent move(Direction nextDirection, boolean eatApple){
+    public CellContent move(Direction nextDirection){
         Direction realDirection = Direction.getRealDirection(directionAct, nextDirection);
         Cell snakeHead = cellList.get(0);
         CellContent cellContentToReturn;
@@ -63,10 +63,13 @@ public class Snake implements CellContent{
         cellContentToReturn = nextHeadCell.getCellContent();
         cellList.add(0,nextHeadCell);
         nextHeadCell.setCellContent(this);
-        if (!eatApple){
+
+
+        if (!(cellContentToReturn instanceof Apple)){
             cellList.get(cellList.size()-1).setCellContent(new EmptyCell());
             cellList.remove(cellList.size()-1);
         }
+
         return cellContentToReturn;
     }
 
