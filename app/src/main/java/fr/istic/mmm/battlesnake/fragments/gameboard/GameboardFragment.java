@@ -80,7 +80,7 @@ public class GameboardFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_gameboard, container, false);
         ButterKnife.bind(this, view);
 
-        //TODO récupéré l'objet game envoyer par le socket
+        //TODO récupéré l'objet board du serveur a la place
         game = new Game();
 
         //TODO récupéré l'objet joueur depuis la socket
@@ -94,7 +94,6 @@ public class GameboardFragment extends Fragment {
         // Inflate the layout for this fragment
         return view;
     }
-
 
     public void onUpPressed(){
         Log.i(TAG,"up pressed");
@@ -116,7 +115,6 @@ public class GameboardFragment extends Fragment {
 
     public void onRightPressed(){
         Log.i(TAG,"right pressed");
-
         game.moveSnakePlayer(Direction.RIGHT,player.getPlayerId());
         boardView.drawBoard(game.getBoardCells());
     }

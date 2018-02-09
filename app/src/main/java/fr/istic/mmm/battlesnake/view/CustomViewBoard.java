@@ -47,7 +47,6 @@ public class CustomViewBoard extends View {
         super.onDraw(canvas);
         paint.setStrokeWidth(1);
 
-
         int heightRectangleInPixel = getHeight()/Constante.NUMBER_OF_CELL_HEIGHT -20;
         int widthRectangleInPixel = getWidth()/Constante.NUMBER_OF_CELL_WIDTH -20;
 
