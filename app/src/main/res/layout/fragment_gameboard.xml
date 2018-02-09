@@ -16,7 +16,9 @@
             android:name="fr.istic.mmm.battlesnake.fragments.gameboard.BoardFragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
             android:layout_weight="1"
+            app:layout_constraintBottom_toTopOf="@+id/fragmentDirection"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">

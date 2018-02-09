@@ -24,10 +24,7 @@ public class Game {
         if (gameStarted){
             throw new RuntimeException("Impossible d'ajouter un nouveau joueur alors que la partie à déjà commencer");
         }
-
         Player newPlayer = new Player(players.size());
-
-
         Snake snake = new Snake(Constante.LIST_COLOR_SNAKE[players.size()],
                     newPlayer,
                     Constante.LIST_DIRECTION_INITIAL_SNAKE[players.size()],
@@ -35,9 +32,20 @@ public class Game {
                     board
                 );
 
+        for (int i = 0; i <  Constante.LIST_POSITION_INITIAL_SNAKE[players.size()].length; i++) {
+            Cell currentCell = Constante.LIST_POSITION_INITIAL_SNAKE[players.size()][i];
+            currentCell.setCellContent(snake);
+
+            board.getCells()[currentCell.getCoordX()][currentCell.getCoordY()] = currentCell;
+        }
+
 
         newPlayer.setSnake(snake);
         players.add(newPlayer);
         return newPlayer;
+    }
+
+    public Cell[][] getBoardCells(){
+        return board.getCells();
     }
 }

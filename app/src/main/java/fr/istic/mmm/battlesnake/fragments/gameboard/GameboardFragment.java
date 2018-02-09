@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 
 import butterknife.ButterKnife;
 import fr.istic.mmm.battlesnake.R;
+import fr.istic.mmm.battlesnake.model.Game;
 import fr.istic.mmm.battlesnake.view.CustomViewBoard;
 
 /**
@@ -36,6 +37,8 @@ public class GameboardFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
 
     private CustomViewBoard boardView;
+
+    private Game game;
 
     public GameboardFragment() {
         // Required empty public constructor
@@ -74,7 +77,12 @@ public class GameboardFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_gameboard, container, false);
         ButterKnife.bind(this, view);
 
-        boardView.drawBoard();
+        //TODO récupéré l'objet game envoyer par le socket
+        game = new Game();
+        game.addNewPlayer();
+        game.addNewPlayer();
+
+        boardView.drawBoard(game.getBoardCells());
 
         // Inflate the layout for this fragment
         return view;

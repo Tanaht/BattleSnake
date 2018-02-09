@@ -8,8 +8,8 @@ import fr.istic.mmm.battlesnake.model.Direction;
 import static fr.istic.mmm.battlesnake.model.Direction.*;
 
 public class Constante {
-    public static final int NUMBER_OF_CELL_HEIGHT = 30;
-    public static final int NUMBER_OF_CELL_WIDTH = 11;
+    public static final int NUMBER_OF_CELL_HEIGHT = 40;
+    public static final int NUMBER_OF_CELL_WIDTH = 30;
 
     public static final Cell[][] LIST_POSITION_INITIAL_SNAKE = {
             {new Cell(NUMBER_OF_CELL_WIDTH/2,3),new Cell(NUMBER_OF_CELL_WIDTH/2,4),new Cell(NUMBER_OF_CELL_WIDTH/2,5)},
@@ -25,5 +25,8 @@ public class Constante {
     };
 
     public static final int COLOR_WALL = Color.BLACK;
+    public static final int COLOR_EMPTY_CELL = Color.WHITE;
+
+
 
 }

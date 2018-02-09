@@ -11,13 +11,20 @@ import android.view.View;
 
 import java.util.Random;
 
+import fr.istic.mmm.battlesnake.Constante;
+import fr.istic.mmm.battlesnake.model.Board;
+import fr.istic.mmm.battlesnake.model.Cell;
+import fr.istic.mmm.battlesnake.model.cellContent.EmptyCell;
+import fr.istic.mmm.battlesnake.model.cellContent.Wall;
+
 /**
  * Created by loic on 08/02/18.
  */
 
 public class CustomViewBoard extends View {
 
-    Paint paint = new Paint();
+    private Paint paint = new Paint();
+    private Cell[][] boardToDraw;
 
     public CustomViewBoard(Context context) {
         super(context);
@@ -38,14 +45,48 @@ public class CustomViewBoard extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        paint.setColor(Color.BLACK);
-        paint.setStrokeWidth(3);
-        canvas.drawRect(30, 30, 80, 80, paint);
+        paint.setStrokeWidth(1);
+
+
+        int heightRectangleInPixel = getHeight()/Constante.NUMBER_OF_CELL_HEIGHT;
+        int widthRectangleInPixel = getWidth()/Constante.NUMBER_OF_CELL_WIDTH;
+
+        for (int i = 0; i < boardToDraw.length; i++) {
+            for (int j = 0; j < boardToDraw[i].length; j++) {
+                if (boardToDraw[i][j].getCellContent() instanceof EmptyCell){
+                    paint.setColor(Constante.COLOR_EMPTY_CELL);
+                }else if (boardToDraw[i][j].getCellContent() instanceof Wall){
+                    paint.setColor(Constante.COLOR_WALL);
+                }else{
+                    paint.setColor(Color.MAGENTA);
+                }
+
+                paint.setStyle(Paint.Style.FILL);
+                canvas.drawRect(i*heightRectangleInPixel,
+                        j*widthRectangleInPixel,
+                        i*heightRectangleInPixel+ heightRectangleInPixel,
+                        j*widthRectangleInPixel+ widthRectangleInPixel,
+                        paint);
+
+                paint.setStyle(Paint.Style.STROKE);
+                paint.setColor(Constante.COLOR_WALL);
+                canvas.drawRect(i*heightRectangleInPixel,
+                        j*widthRectangleInPixel,
+                        i*heightRectangleInPixel+ heightRectangleInPixel,
+                        j*widthRectangleInPixel+ widthRectangleInPixel,
+                        paint);
+
+            }
+        }
+
+
+
 
 
     }
 
-    public void drawBoard() {
+    public void drawBoard(Cell[][] cells) {
+        boardToDraw = cells;
         invalidate(); // redraws the view calling onDraw()
     }
 }
