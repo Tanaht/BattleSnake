@@ -24,4 +24,6 @@ public class Constante {
             Color.BLUE,Color.RED
     };
 
+    public static final int COLOR_WALL = Color.BLACK;
+
 }
