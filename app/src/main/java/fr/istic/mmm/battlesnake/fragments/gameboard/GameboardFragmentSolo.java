@@ -1,7 +1,5 @@
 package fr.istic.mmm.battlesnake.fragments.gameboard;
 
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
@@ -18,6 +16,7 @@ import fr.istic.mmm.battlesnake.R;
 import fr.istic.mmm.battlesnake.model.Direction;
 import fr.istic.mmm.battlesnake.model.Game;
 import fr.istic.mmm.battlesnake.model.Player;
+import fr.istic.mmm.battlesnake.socket.Client;
 import fr.istic.mmm.battlesnake.socket.Server;
 import fr.istic.mmm.battlesnake.view.CustomViewBoard;
 
@@ -98,6 +97,11 @@ public class GameboardFragmentSolo extends Fragment {
         Server serv = new Server(1);
         new Thread(serv).start();
 
+        Client client = new Client("0.0.0.0", boardView);
+
+        new Thread(client).start();
+
+
         //TODO récupéré l'objet board du serveur a la place
         game = new Game();
 
@@ -108,31 +112,33 @@ public class GameboardFragmentSolo extends Fragment {
         game.startGame();
 
         boardView.drawBoard(game.getBoardCells());
+
+
         buttonUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onUpPressed();
+                client.goToUp();
             }
         });
 
         buttonDown.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onDownPressed();
+                client.goToDown();
             }
         });
 
         buttonLeft.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onLeftPressed();
+                client.goToLeft();
             }
         });
 
         buttonRight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onRightPressed();
+                client.goToRight();
             }
         });
 
@@ -140,29 +146,6 @@ public class GameboardFragmentSolo extends Fragment {
         return view;
     }
 
-    public void onUpPressed(){
-        Log.i(TAG,"up pressed");
-        game.moveSnakePlayer(Direction.TOP,player.getPlayerId());
-        boardView.drawBoard(game.getBoardCells());
-    }
-
-    public void onDownPressed(){
-        Log.i(TAG,"down pressed");
-        game.moveSnakePlayer(Direction.BOT,player.getPlayerId());
-        boardView.drawBoard(game.getBoardCells());
-    }
-
-    public void onLeftPressed(){
-        Log.i(TAG,"left pressed");
-        game.moveSnakePlayer(Direction.LEFT,player.getPlayerId());
-        boardView.drawBoard(game.getBoardCells());
-    }
-
-    public void onRightPressed(){
-        Log.i(TAG,"right pressed");
-        game.moveSnakePlayer(Direction.RIGHT,player.getPlayerId());
-        boardView.drawBoard(game.getBoardCells());
-    }
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {

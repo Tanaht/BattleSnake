@@ -5,7 +5,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import fr.istic.mmm.battlesnake.Constante;
-import fr.istic.mmm.battlesnake.model.cellContent.Apple;
 import fr.istic.mmm.battlesnake.model.cellContent.CellContent;
 import fr.istic.mmm.battlesnake.model.cellContent.Snake;
 
@@ -37,7 +36,7 @@ public class Game {
                 );
         for (int i = 0; i <  Constante.LIST_POSITION_INITIAL_SNAKE[players.size()].length; i++) {
             Cell currentCell = Constante.LIST_POSITION_INITIAL_SNAKE[players.size()][i];
-            currentCell.setCellContent(snake);
+            currentCell.setContent(snake);
             board.getCells()[currentCell.getCoordX()][currentCell.getCoordY()] = currentCell;
         }
 

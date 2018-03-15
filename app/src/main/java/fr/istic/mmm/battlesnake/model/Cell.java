@@ -7,12 +7,12 @@ public class Cell {
 
     private int coordX;
     private int coordY;
-    private CellContent cellContent;
+    private CellContent content;
 
     public Cell(int coordX, int coordY) {
         this.coordX = coordX;
         this.coordY = coordY;
-        cellContent = new EmptyCell();
+        content = new EmptyCell();
     }
 
     public int getCoordX() {
@@ -23,11 +23,11 @@ public class Cell {
         return coordY;
     }
 
-    public CellContent getCellContent() {
-        return cellContent;
+    public CellContent getContent() {
+        return content;
     }
 
-    public void setCellContent(CellContent cellContent) {
-        this.cellContent = cellContent;
+    public void setContent(CellContent content) {
+        this.content = content;
     }
 }

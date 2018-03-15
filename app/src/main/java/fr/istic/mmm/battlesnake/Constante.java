@@ -31,5 +31,7 @@ public class Constante {
 
     public static final int SERVER_PORT = 6000;
 
+    public static final int TIME_EACH_FRAME_IN_MILISECONDE = 1000;
+
 
 }

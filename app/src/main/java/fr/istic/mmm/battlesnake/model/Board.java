@@ -22,7 +22,7 @@ public class Board {
                 if (i == 0 || j == 0
                         || i == cells.length-1
                         || j == cells[i].length-1){
-                    cell.setCellContent(new Wall());
+                    cell.setContent(new Wall());
                 }
 
                 cells[i][j] = cell;
@@ -34,11 +34,11 @@ public class Board {
         Random rand = new Random();
         int randomX = 0;
         int randomY = 0;
-        while (!(cells[randomX][randomY].getCellContent() instanceof EmptyCell)){
+        while (!(cells[randomX][randomY].getContent() instanceof EmptyCell)){
             randomX = rand.nextInt(Constante.NUMBER_OF_CELL_WIDTH);
             randomY = rand.nextInt(Constante.NUMBER_OF_CELL_WIDTH);
         }
-        cells[randomX][randomY].setCellContent(new Apple());
+        cells[randomX][randomY].setContent(new Apple());
     }
 
 

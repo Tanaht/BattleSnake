@@ -2,20 +2,13 @@ package fr.istic.mmm.battlesnake.view;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 
-import java.util.Random;
-
 import fr.istic.mmm.battlesnake.Constante;
-import fr.istic.mmm.battlesnake.model.Board;
 import fr.istic.mmm.battlesnake.model.Cell;
-import fr.istic.mmm.battlesnake.model.cellContent.EmptyCell;
-import fr.istic.mmm.battlesnake.model.cellContent.Wall;
 
 public class CustomViewBoard extends View {
 
@@ -49,7 +42,7 @@ public class CustomViewBoard extends View {
 
         for (int i = 0; i < boardToDraw.length; i++) {
             for (int j = 0; j < boardToDraw[i].length; j++) {
-                paint.setColor(boardToDraw[i][j].getCellContent().getColorToDraw());
+                paint.setColor(boardToDraw[i][j].getContent().getColorToDraw());
 
                 paint.setStyle(Paint.Style.FILL);
                 canvas.drawRect(i*widthRectangleInPixel,
