@@ -9,7 +9,7 @@ import android.os.Bundle;
 import fr.istic.mmm.battlesnake.fragments.AboutFragment;
 import fr.istic.mmm.battlesnake.fragments.gameboard.BoardFragment;
 import fr.istic.mmm.battlesnake.fragments.gameboard.DirectionFragment;
-import fr.istic.mmm.battlesnake.fragments.gameboard.GameboardFragment;
+import fr.istic.mmm.battlesnake.fragments.gameboard.GameboardFragmentSolo;
 import fr.istic.mmm.battlesnake.fragments.HomeFragment;
 import fr.istic.mmm.battlesnake.fragments.ProfileFragment;
 import fr.istic.mmm.battlesnake.fragments.RankingFragment;
@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity implements
         ProfileFragment.OnFragmentInteractionListener,
         RankingFragment.OnFragmentInteractionListener,
         SearchGameFragment.OnFragmentInteractionListener,
-        GameboardFragment.OnFragmentInteractionListener,
+        GameboardFragmentSolo.OnFragmentInteractionListener,
         BoardFragment.OnFragmentInteractionListener,
         DirectionFragment.OnFragmentInteractionListener {
     private HomeFragment home;

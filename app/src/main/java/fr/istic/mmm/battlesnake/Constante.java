@@ -29,6 +29,7 @@ public class Constante {
     public static final int COLOR_APPLE = Color.GREEN;
 
 
+    public static final int SERVER_PORT = 6000;
 
 
 }

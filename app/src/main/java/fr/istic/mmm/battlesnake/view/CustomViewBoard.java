@@ -17,10 +17,6 @@ import fr.istic.mmm.battlesnake.model.Cell;
 import fr.istic.mmm.battlesnake.model.cellContent.EmptyCell;
 import fr.istic.mmm.battlesnake.model.cellContent.Wall;
 
-/**
- * Created by loic on 08/02/18.
- */
-
 public class CustomViewBoard extends View {
 
     private Paint paint = new Paint();
@@ -45,28 +41,29 @@ public class CustomViewBoard extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        paint.setStrokeWidth(1);
 
-        int heightRectangleInPixel = getHeight()/Constante.NUMBER_OF_CELL_HEIGHT -20;
-        int widthRectangleInPixel = getWidth()/Constante.NUMBER_OF_CELL_WIDTH -20;
+
+        paint.setStrokeWidth(1);
+        int heightRectangleInPixel = getHeight()/Constante.NUMBER_OF_CELL_HEIGHT;
+        int widthRectangleInPixel = getWidth()/Constante.NUMBER_OF_CELL_WIDTH;
 
         for (int i = 0; i < boardToDraw.length; i++) {
             for (int j = 0; j < boardToDraw[i].length; j++) {
                 paint.setColor(boardToDraw[i][j].getCellContent().getColorToDraw());
 
                 paint.setStyle(Paint.Style.FILL);
-                canvas.drawRect(i*heightRectangleInPixel,
-                        j*widthRectangleInPixel,
-                        i*heightRectangleInPixel+ heightRectangleInPixel,
-                        j*widthRectangleInPixel+ widthRectangleInPixel,
+                canvas.drawRect(i*widthRectangleInPixel,
+                        j*heightRectangleInPixel,
+                        i*widthRectangleInPixel + widthRectangleInPixel,
+                        j*heightRectangleInPixel + heightRectangleInPixel,
                         paint);
 
                 paint.setStyle(Paint.Style.STROKE);
                 paint.setColor(Constante.COLOR_WALL);
-                canvas.drawRect(i*heightRectangleInPixel,
-                        j*widthRectangleInPixel,
-                        i*heightRectangleInPixel+ heightRectangleInPixel,
-                        j*widthRectangleInPixel+ widthRectangleInPixel,
+                canvas.drawRect(i*widthRectangleInPixel,
+                        j*heightRectangleInPixel,
+                        i*widthRectangleInPixel + widthRectangleInPixel,
+                        j*heightRectangleInPixel + heightRectangleInPixel,
                         paint);
 
             }

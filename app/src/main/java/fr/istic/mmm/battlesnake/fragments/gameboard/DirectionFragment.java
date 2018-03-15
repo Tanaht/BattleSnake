@@ -81,7 +81,7 @@ public class DirectionFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_direction, container, false);
         ButterKnife.bind(this, view);
 
-        final GameboardFragment parentFragment = (GameboardFragment) getParentFragment();
+        final GameboardFragmentSolo parentFragment = (GameboardFragmentSolo) getParentFragment();
 
         buttonUp.setOnClickListener(new View.OnClickListener() {
             @Override

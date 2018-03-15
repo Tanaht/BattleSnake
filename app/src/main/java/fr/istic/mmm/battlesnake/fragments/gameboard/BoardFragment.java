@@ -1,7 +1,5 @@
 package fr.istic.mmm.battlesnake.fragments.gameboard;
 
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
@@ -75,7 +73,7 @@ public class BoardFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_board, container, false);
         ButterKnife.bind(this, view);
 
-        GameboardFragment parentFragment = (GameboardFragment) getParentFragment();
+        GameboardFragmentSolo parentFragment = (GameboardFragmentSolo) getParentFragment();
 
         parentFragment.setBoardView(boardView);
 

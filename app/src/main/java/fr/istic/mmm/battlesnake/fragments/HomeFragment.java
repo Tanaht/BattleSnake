@@ -18,6 +18,7 @@ import android.widget.Button;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import fr.istic.mmm.battlesnake.R;
+import fr.istic.mmm.battlesnake.fragments.gameboard.GameboardFragmentSolo;
 
 
 /**
@@ -41,6 +42,8 @@ public class HomeFragment extends Fragment {
     private String mParam2;
 
     @BindView(R.id.playButton) Button playButton;
+
+    @BindView(R.id.playButtonMulti) Button playButtonMulti;
 
 
     private OnFragmentInteractionListener mListener;
@@ -115,7 +118,20 @@ public class HomeFragment extends Fragment {
         playButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.i(Tag,"button play pressed");
+                Log.i(Tag,"button play solo pressed");
+
+                FragmentManager manager = getFragmentManager();
+                FragmentTransaction transaction = manager.beginTransaction();
+
+                transaction.replace(R.id.base_layout, new GameboardFragmentSolo());
+                transaction.commit();
+            }
+        });
+
+        playButtonMulti.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.i(Tag,"button play multi pressed");
 
                 FragmentManager manager = getFragmentManager();
                 FragmentTransaction transaction = manager.beginTransaction();

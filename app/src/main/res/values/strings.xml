@@ -10,5 +10,6 @@
     <string name="ranking">Classement</string>
     <string name="profile">Profil</string>
     <string name="home">Accueil</string>
-    <string name="textButtonPlay">Jouer</string>
+    <string name="textButtonPlay1Joueur">1 joueur</string>
+    <string name="textButtonPlayMultiJoueur">multi joueur</string>
 </resources>
