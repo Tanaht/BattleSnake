@@ -52,11 +52,12 @@ public class Server implements Runnable {
 
             Log.i(TAG, "nouveau joueur connecté : ip "+clientSocket.getInetAddress());
         }
+        Log.i(TAG, " Tous les joueurs sont connectés");
     }
 
     @Override
     public void run() {
-
+        Log.i(TAG, "serveur lancer adresse ip :"+serverSocket.getInetAddress()+", port :"+serverSocket.getLocalPort());
         try {
             Log.i(TAG, "Attente que les client ce connecte");
             waitAllPlayerConnected();
@@ -65,6 +66,8 @@ public class Server implements Runnable {
             Log.e(TAG,"Une erreur est intervenue lors de l'attente de connexion des client au serveur");
             return;
         }
+
+        Log.i(TAG, "début de la partie ...");
 
     }
 

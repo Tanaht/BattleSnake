@@ -18,6 +18,7 @@ import fr.istic.mmm.battlesnake.R;
 import fr.istic.mmm.battlesnake.model.Direction;
 import fr.istic.mmm.battlesnake.model.Game;
 import fr.istic.mmm.battlesnake.model.Player;
+import fr.istic.mmm.battlesnake.socket.Server;
 import fr.istic.mmm.battlesnake.view.CustomViewBoard;
 
 /**
@@ -94,6 +95,8 @@ public class GameboardFragmentSolo extends Fragment {
         View view = inflater.inflate(R.layout.fragment_gameboard, container, false);
         ButterKnife.bind(this, view);
 
+        Server serv = new Server(1);
+        new Thread(serv).start();
 
         //TODO récupéré l'objet board du serveur a la place
         game = new Game();
@@ -102,12 +105,9 @@ public class GameboardFragmentSolo extends Fragment {
         //TODO récupéré l'objet joueur depuis la socket
         player = game.addNewPlayer();
         game.addNewPlayer();
-
         game.startGame();
 
         boardView.drawBoard(game.getBoardCells());
-
-
         buttonUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
