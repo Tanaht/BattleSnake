@@ -11,9 +11,15 @@ import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 import fr.istic.mmm.battlesnake.Constante;
+import fr.istic.mmm.battlesnake.model.Cell;
+import fr.istic.mmm.battlesnake.model.Direction;
 import fr.istic.mmm.battlesnake.model.Game;
+import fr.istic.mmm.battlesnake.model.RoutineMessageContent;
+import fr.istic.mmm.battlesnake.model.cellContent.Apple;
+import fr.istic.mmm.battlesnake.model.cellContent.CellContent;
 
 import static fr.istic.mmm.battlesnake.Constante.TIME_EACH_FRAME_IN_MILISECONDE;
 
@@ -77,32 +83,63 @@ public class Server implements Runnable {
 
         Log.i(TAG, "server : début de la partie ...");
         game.startGame();
+        game.generateApple();
 
         //periodicScheduler = Executors.newScheduledThreadPool(1);
         //periodicScheduler.scheduleAtFixedRate(this::gameRoutine, 0, TIME_EACH_FRAME_IN_MILISECONDE, TimeUnit.MILLISECONDS);
 
+        for (ServerPlayerRepresentation client : serverPlayerRepresentations) {
+            client.sendPlayerIdToClient();
+            client.sendNumberOfPlayerInGame(nbOfPlayer);
+        }
+
+
+        //TODO attendre que tout les joueurs sois prets
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
         while (true){
             gameRoutine();
-
             try {
                 Thread.sleep(TIME_EACH_FRAME_IN_MILISECONDE);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
-
     }
 
     public void gameRoutine() {
+        List<Direction> listPlaterDirection = new ArrayList<>();
+
+        boolean appleEaten = false;
         for (ServerPlayerRepresentation client : serverPlayerRepresentations) {
-            game.moveSnakePlayer(client.getNextDirection(), client.getIdPlayer());
-        }
-        for (ServerPlayerRepresentation client : serverPlayerRepresentations) {
-            try {
-                client.sendBoardToDraw(game.getBoardCells());
-            } catch (IOException e) {
-                e.printStackTrace();
+            Direction directionPlayer = client.getNextDirection();
+            CellContent content = game.moveSnakePlayer(directionPlayer, client.getIdPlayer());
+            listPlaterDirection.add(directionPlayer);
+
+            if (content instanceof Apple){
+                appleEaten = true;
             }
+        }
+
+        if (appleEaten){
+            game.generateApple();
+        }
+
+        Cell applePosition = game.getApplePosition();
+
+
+        RoutineMessageContent routineMsg = new RoutineMessageContent(
+                listPlaterDirection,
+                applePosition.getCoordX(),
+                applePosition.getCoordY()
+        );
+
+        for (ServerPlayerRepresentation client : serverPlayerRepresentations) {
+            client.sendGameRoutine(routineMsg);
         }
 
         Log.i(TAG, "gameRoutine: ...");

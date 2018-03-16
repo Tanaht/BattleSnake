@@ -53,11 +53,22 @@ public class Game {
 
     public void startGame(){
         gameStarted = true;
-        board.generateApple();
-
     }
+
+    public Cell generateApple(){
+        return board.generateApple();
+    }
+
+    public void setApple(int xPosition, int yPostion){
+        board.setApple(xPosition, yPostion);
+    }
+
     public Cell[][] getBoardCells(){
         return board.getCells();
+    }
+
+    public Cell getApplePosition(){
+        return board.getApplePosition();
     }
 
 

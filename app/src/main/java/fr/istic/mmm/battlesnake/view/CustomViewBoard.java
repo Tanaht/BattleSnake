@@ -31,36 +31,39 @@ public class CustomViewBoard extends View {
         super(context, attrs, defStyleAttr, defStyleRes);
     }
 
+
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
+        if(boardToDraw != null){
+            paint.setStrokeWidth(1);
+            int heightRectangleInPixel = getHeight()/Constante.NUMBER_OF_CELL_HEIGHT;
+            int widthRectangleInPixel = getWidth()/Constante.NUMBER_OF_CELL_WIDTH;
 
+            for (int i = 0; i < boardToDraw.length; i++) {
+                for (int j = 0; j < boardToDraw[i].length; j++) {
+                    paint.setColor(boardToDraw[i][j].getContent().getColorToDraw());
 
-        paint.setStrokeWidth(1);
-        int heightRectangleInPixel = getHeight()/Constante.NUMBER_OF_CELL_HEIGHT;
-        int widthRectangleInPixel = getWidth()/Constante.NUMBER_OF_CELL_WIDTH;
+                    paint.setStyle(Paint.Style.FILL);
+                    canvas.drawRect(i*widthRectangleInPixel,
+                            j*heightRectangleInPixel,
+                            i*widthRectangleInPixel + widthRectangleInPixel,
+                            j*heightRectangleInPixel + heightRectangleInPixel,
+                            paint);
 
-        for (int i = 0; i < boardToDraw.length; i++) {
-            for (int j = 0; j < boardToDraw[i].length; j++) {
-                paint.setColor(boardToDraw[i][j].getContent().getColorToDraw());
+                    paint.setStyle(Paint.Style.STROKE);
+                    paint.setColor(Constante.COLOR_WALL);
+                    canvas.drawRect(i*widthRectangleInPixel,
+                            j*heightRectangleInPixel,
+                            i*widthRectangleInPixel + widthRectangleInPixel,
+                            j*heightRectangleInPixel + heightRectangleInPixel,
+                            paint);
 
-                paint.setStyle(Paint.Style.FILL);
-                canvas.drawRect(i*widthRectangleInPixel,
-                        j*heightRectangleInPixel,
-                        i*widthRectangleInPixel + widthRectangleInPixel,
-                        j*heightRectangleInPixel + heightRectangleInPixel,
-                        paint);
-
-                paint.setStyle(Paint.Style.STROKE);
-                paint.setColor(Constante.COLOR_WALL);
-                canvas.drawRect(i*widthRectangleInPixel,
-                        j*heightRectangleInPixel,
-                        i*widthRectangleInPixel + widthRectangleInPixel,
-                        j*heightRectangleInPixel + heightRectangleInPixel,
-                        paint);
-
+                }
             }
+
         }
+
 
     }
 

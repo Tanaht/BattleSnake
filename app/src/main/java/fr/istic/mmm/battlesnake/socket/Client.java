@@ -7,18 +7,21 @@ import com.google.gson.Gson;
 
 import java.io.IOException;
 import java.net.Socket;
+import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.ScheduledExecutorService;
 
 import fr.istic.mmm.battlesnake.Constante;
-import fr.istic.mmm.battlesnake.model.Cell;
+import fr.istic.mmm.battlesnake.fragments.gameboard.GameboardFragmentSolo;
 import fr.istic.mmm.battlesnake.model.Direction;
+import fr.istic.mmm.battlesnake.model.Game;
+import fr.istic.mmm.battlesnake.model.Player;
 import fr.istic.mmm.battlesnake.socket.Message.fromClient.MessageFromClient;
 import fr.istic.mmm.battlesnake.socket.Message.fromServer.MessageFromServer;
-import fr.istic.mmm.battlesnake.socket.Message.fromServer.MessageSendBoard;
+import fr.istic.mmm.battlesnake.socket.Message.fromServer.MessageSendGameRoutineMessage;
 import fr.istic.mmm.battlesnake.socket.Message.fromServer.MessageSendIdPlayer;
-import fr.istic.mmm.battlesnake.view.CustomViewBoard;
+import fr.istic.mmm.battlesnake.socket.Message.fromServer.MessageSendNumberOfPlayer;
 
 import static fr.istic.mmm.battlesnake.socket.Message.fromClient.TypeMessageClientToServer.NEXT_DIRECTION_PLAYER;
 
@@ -28,12 +31,17 @@ public class Client implements Runnable{
     private ScheduledExecutorService executorService = Executors.newScheduledThreadPool(Integer.MAX_VALUE);
 
     private String ipServer;
-    private CustomViewBoard boardView;
+    private GameboardFragmentSolo objForHandlerMainThread;
     private Socket socketServer;
 
-    public Client(String ipServer, CustomViewBoard boardView){
+    private Game game;
+    private Player player;
+    private int playerId;
+
+    public Client(String ipServer, GameboardFragmentSolo objForHandlerMainThread){
         this.ipServer = ipServer;
-        this.boardView = boardView;
+        this.objForHandlerMainThread = objForHandlerMainThread;
+        game = new Game();
     }
 
 
@@ -82,7 +90,7 @@ public class Client implements Runnable{
         connectToServer();
         while(!socketServer.isClosed()){
 
-            byte[] bytes = new byte[100000];
+            byte[] bytes = new byte[10000];
             int numberOfBytesRead = 0;
             try {
                 numberOfBytesRead = socketServer.getInputStream().read(bytes);
@@ -98,20 +106,42 @@ public class Client implements Runnable{
             MessageFromServer<?> msg = gson.fromJson(jsonObject, MessageFromServer.class);
 
             switch (msg.getMsgFromServer()){
-                case BOARD_TO_DRAW:
-                    MessageSendBoard boardMsg = gson.fromJson(jsonObject, MessageSendBoard.class);
+                case NUMBER_OF_PLAYER:
+                    MessageSendNumberOfPlayer numberOfPlayerMsg = gson.fromJson(jsonObject, MessageSendNumberOfPlayer.class);
 
-                    Cell[][] cells = boardMsg.getData();
-                    boardView.drawBoard(cells);
+                    for (int i = 0;i<numberOfPlayerMsg.getData();i++){
+                        if (i == playerId){
+                            player = game.addNewPlayer();
+                        }else{
+                            game.addNewPlayer();
+                        }
+                    }
+
                     break;
                 case PLAYER_ID:
                     MessageSendIdPlayer idPlayerMsg = gson.fromJson(jsonObject, MessageSendIdPlayer.class);
+                    playerId = idPlayerMsg.getData();
                     break;
+
+                case GAME_ROUTINE_MESSAGE:
+                    MessageSendGameRoutineMessage routineMsg = gson.fromJson(jsonObject, MessageSendGameRoutineMessage.class);
+                    List<Direction> directions = routineMsg.getData().getNewPlayerDirection();
+
+                    for (int i = 0; i < directions.size() ; i++) {
+                        game.moveSnakePlayer(directions.get(i),i);
+                    }
+
+                    int x = routineMsg.getData().getApplePositionX();
+                    int y = routineMsg.getData().getApplePositionY();
+                    game.setApple(x,y);
+
+                    objForHandlerMainThread.handlerMainThreadForDrawView(game.getBoardCells());
+                    break;
+
                 case PLAYER_WIN:
                     break;
                 case PLAYER_LOSE:
                     break;
-
                 default:
                     Log.e(TAG, "client : msg from server not implemented :"+msg.getMsgFromServer());
                     break;

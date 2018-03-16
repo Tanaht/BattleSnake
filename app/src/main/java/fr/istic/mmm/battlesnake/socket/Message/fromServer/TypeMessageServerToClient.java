@@ -2,8 +2,9 @@ package fr.istic.mmm.battlesnake.socket.Message.fromServer;
 
 
 public enum TypeMessageServerToClient {
-    BOARD_TO_DRAW,
+    NUMBER_OF_PLAYER,
     PLAYER_ID,
     PLAYER_WIN,
-    PLAYER_LOSE
+    PLAYER_LOSE,
+    GAME_ROUTINE_MESSAGE
 }

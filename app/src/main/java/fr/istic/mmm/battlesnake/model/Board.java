@@ -1,5 +1,7 @@
 package fr.istic.mmm.battlesnake.model;
 
+import android.os.Message;
+
 import java.util.Random;
 
 import fr.istic.mmm.battlesnake.Constante;
@@ -11,7 +13,11 @@ import fr.istic.mmm.battlesnake.model.cellContent.Wall;
 public class Board {
 
     private Cell[][] cells;
+    private Cell applePosition;
 
+    public Cell getApplePosition() {
+        return applePosition;
+    }
 
     public Board() {
         this.cells = new Cell[Constante.NUMBER_OF_CELL_WIDTH][Constante.NUMBER_OF_CELL_HEIGHT];
@@ -30,7 +36,7 @@ public class Board {
         }
     }
 
-    public void generateApple(){
+    public Cell generateApple(){
         Random rand = new Random();
         int randomX = 0;
         int randomY = 0;
@@ -39,6 +45,17 @@ public class Board {
             randomY = rand.nextInt(Constante.NUMBER_OF_CELL_WIDTH);
         }
         cells[randomX][randomY].setContent(new Apple());
+        applePosition = cells[randomX][randomY];
+        return cells[randomX][randomY];
+    }
+
+    public void setApple(int xPosition, int yPosition){
+        if (applePosition != null
+                && applePosition.getContent() instanceof Apple){
+            applePosition.setContent(new EmptyCell());
+        }
+        cells[xPosition][yPosition].setContent(new Apple());
+        applePosition = cells[xPosition][yPosition];
     }
 
 
@@ -50,4 +67,6 @@ public class Board {
     public Cell[][] getCells() {
         return cells;
     }
+
+
 }

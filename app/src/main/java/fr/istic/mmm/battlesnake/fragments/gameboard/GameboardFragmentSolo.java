@@ -4,8 +4,12 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -13,6 +17,8 @@ import android.widget.Button;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import fr.istic.mmm.battlesnake.R;
+import fr.istic.mmm.battlesnake.model.Board;
+import fr.istic.mmm.battlesnake.model.Cell;
 import fr.istic.mmm.battlesnake.model.Direction;
 import fr.istic.mmm.battlesnake.model.Game;
 import fr.istic.mmm.battlesnake.model.Player;
@@ -52,6 +58,15 @@ public class GameboardFragmentSolo extends Fragment {
     Button buttonLeft;
     @BindView(R.id.buttonRight)
     Button buttonRight;
+
+    Handler drawViewHandler = new Handler(Looper.getMainLooper()) {
+        @Override
+        public void handleMessage(Message inputMessage) {
+            Cell[][] cellToDraw = (Cell[][]) inputMessage.obj;
+            boardView.drawBoard(cellToDraw);
+        }
+    };
+
 
 
     private Game game;
@@ -97,48 +112,39 @@ public class GameboardFragmentSolo extends Fragment {
         Server serv = new Server(1);
         new Thread(serv).start();
 
-        Client client = new Client("0.0.0.0", boardView);
-
+        Client client = new Client("0.0.0.0", this);
         new Thread(client).start();
 
 
-        //TODO récupéré l'objet board du serveur a la place
-        game = new Game();
-
-
-        //TODO récupéré l'objet joueur depuis la socket
-        player = game.addNewPlayer();
-        game.addNewPlayer();
-        game.startGame();
-
-        boardView.drawBoard(game.getBoardCells());
-
-
-        buttonUp.setOnClickListener(new View.OnClickListener() {
+        buttonUp.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public void onClick(View view) {
+            public boolean onTouch(View v, MotionEvent event) {
                 client.goToUp();
+                return false;
             }
         });
 
-        buttonDown.setOnClickListener(new View.OnClickListener() {
+        buttonDown.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public void onClick(View view) {
+            public boolean onTouch(View v, MotionEvent event) {
                 client.goToDown();
+                return false;
             }
         });
 
-        buttonLeft.setOnClickListener(new View.OnClickListener() {
+        buttonLeft.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public void onClick(View view) {
+            public boolean onTouch(View v, MotionEvent event) {
                 client.goToLeft();
+                return false;
             }
         });
 
-        buttonRight.setOnClickListener(new View.OnClickListener() {
+        buttonRight.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public void onClick(View view) {
+            public boolean onTouch(View v, MotionEvent event) {
                 client.goToRight();
+                return false;
             }
         });
 
@@ -146,6 +152,12 @@ public class GameboardFragmentSolo extends Fragment {
         return view;
     }
 
+    public void handlerMainThreadForDrawView(Cell[][] cells){
+        int neSertARien = 0;
+        Message completeMessage =
+                drawViewHandler.obtainMessage(neSertARien,cells);
+        completeMessage.sendToTarget();
+    }
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {

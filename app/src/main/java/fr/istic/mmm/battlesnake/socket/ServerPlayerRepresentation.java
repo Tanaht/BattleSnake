@@ -8,16 +8,14 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-import fr.istic.mmm.battlesnake.model.Cell;
 import fr.istic.mmm.battlesnake.model.Direction;
 import fr.istic.mmm.battlesnake.model.Player;
+import fr.istic.mmm.battlesnake.model.RoutineMessageContent;
 import fr.istic.mmm.battlesnake.socket.Message.fromClient.MessageFromClient;
 import fr.istic.mmm.battlesnake.socket.Message.fromClient.MessageSendDirection;
-import fr.istic.mmm.battlesnake.socket.Message.fromServer.MessageFromServer;
-import fr.istic.mmm.battlesnake.socket.Message.fromServer.MessageSendBoard;
+import fr.istic.mmm.battlesnake.socket.Message.fromServer.MessageSendGameRoutineMessage;
 import fr.istic.mmm.battlesnake.socket.Message.fromServer.MessageSendIdPlayer;
-
-import static fr.istic.mmm.battlesnake.socket.Message.fromServer.TypeMessageServerToClient.PLAYER_ID;
+import fr.istic.mmm.battlesnake.socket.Message.fromServer.MessageSendNumberOfPlayer;
 
 public class ServerPlayerRepresentation implements Runnable {
     private static final String TAG = "b.s.ServerPlayer";
@@ -38,17 +36,35 @@ public class ServerPlayerRepresentation implements Runnable {
         this.clientSocket = socket;
     }
 
-
-
-    public void sendBoardToDraw(Cell[][] board) throws IOException {
+    public void sendGameRoutine(RoutineMessageContent routineData){
         Gson gson = new Gson();
-        clientSocket.getOutputStream().write(gson.toJson(new MessageSendBoard(board)).getBytes());
+        try {
+            clientSocket.getOutputStream().write(gson.toJson(new MessageSendGameRoutineMessage(routineData)).getBytes());
+        } catch (IOException e) {
+            Log.e(TAG, "server : error when send direction to player" );
+            e.printStackTrace();
+        }
     }
 
-    public void sendPlayerIdToClient() throws IOException {
+    public void sendNumberOfPlayerInGame(int nb) {
+        Gson gson = new Gson();
+        try {
+            clientSocket.getOutputStream().write(gson.toJson(new MessageSendNumberOfPlayer(nb)).getBytes());
+        } catch (IOException e) {
+            Log.e(TAG, "server : error when try to send number of player in game");
+            e.printStackTrace();
+        }
+    }
+
+    public void sendPlayerIdToClient(){
         Gson gson = new Gson();
         MessageSendIdPlayer msg = new MessageSendIdPlayer(snakePlayer.getPlayerId());
-        clientSocket.getOutputStream().write(gson.toJson(msg).getBytes());
+        try {
+            clientSocket.getOutputStream().write(gson.toJson(msg).getBytes());
+        } catch (IOException e) {
+            Log.e(TAG, "server : Erreur lors de la transmission de l'id du joueur" );
+            e.printStackTrace();
+        }
     }
 
     public Direction getNextDirection() {
@@ -66,12 +82,7 @@ public class ServerPlayerRepresentation implements Runnable {
 
     @Override
     public void run() {
-        try {
-            sendPlayerIdToClient();
-        } catch (IOException e) {
-            Log.e(TAG, "server : Erreur lors de la transmission de l'id du joueur" );
-            e.printStackTrace();
-        }
+
         while(clientSocket.isConnected()){
 
             byte[] bytes = new byte[4096];

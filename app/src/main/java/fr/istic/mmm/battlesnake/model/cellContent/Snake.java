@@ -11,7 +11,7 @@ import fr.istic.mmm.battlesnake.model.Player;
 public class Snake extends CellContent {
 
     private transient Player player;
-    private transient Direction directionAct;
+    private Direction directionAct;
     private transient List<Cell> cellList;
     private transient Board gameBoard;
 
