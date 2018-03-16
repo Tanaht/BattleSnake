@@ -12,16 +12,28 @@ public class Constante {
     public static final int NUMBER_OF_CELL_WIDTH = 30;
 
     public static final Cell[][] LIST_POSITION_INITIAL_SNAKE = {
-            {new Cell(NUMBER_OF_CELL_WIDTH/2,5),new Cell(NUMBER_OF_CELL_WIDTH/2,4),new Cell(NUMBER_OF_CELL_WIDTH/2,3)},
-            {new Cell(NUMBER_OF_CELL_WIDTH/2,NUMBER_OF_CELL_HEIGHT-5),new Cell(NUMBER_OF_CELL_WIDTH/2,NUMBER_OF_CELL_HEIGHT-4),new Cell(NUMBER_OF_CELL_WIDTH/2,NUMBER_OF_CELL_HEIGHT-3)}
+
+            {new Cell(NUMBER_OF_CELL_WIDTH/2,5),
+                    new Cell(NUMBER_OF_CELL_WIDTH/2,4),
+                    new Cell(NUMBER_OF_CELL_WIDTH/2,3)},
+            {new Cell(NUMBER_OF_CELL_WIDTH/2,NUMBER_OF_CELL_HEIGHT-5),
+                    new Cell(NUMBER_OF_CELL_WIDTH/2,NUMBER_OF_CELL_HEIGHT-4),
+                    new Cell(NUMBER_OF_CELL_WIDTH/2,NUMBER_OF_CELL_HEIGHT-3)},
+            {new Cell(NUMBER_OF_CELL_WIDTH-5,NUMBER_OF_CELL_HEIGHT/2),
+                    new Cell(NUMBER_OF_CELL_WIDTH-4,NUMBER_OF_CELL_HEIGHT/2),
+                    new Cell(NUMBER_OF_CELL_WIDTH-3,NUMBER_OF_CELL_HEIGHT/2)},
+            {new Cell(5,NUMBER_OF_CELL_HEIGHT/2),
+                    new Cell(4,NUMBER_OF_CELL_HEIGHT/2),
+                    new Cell(3,NUMBER_OF_CELL_HEIGHT/2)},
+
     };
 
     public static final Direction[] LIST_DIRECTION_INITIAL_SNAKE = {
-           BOT, TOP
+           BOT, TOP,LEFT,RIGHT
     };
 
     public static final int LIST_COLOR_SNAKE[] = {
-            Color.BLUE,Color.RED
+            Color.BLUE,Color.RED,Color.GREEN,Color.MAGENTA
     };
 
     public static final int COLOR_WALL = Color.BLACK;
@@ -31,7 +43,7 @@ public class Constante {
 
     public static final int SERVER_PORT = 6000;
 
-    public static final int TIME_EACH_FRAME_IN_MILISECONDE = 500;
+    public static final int TIME_EACH_FRAME_IN_MILISECONDE = 5000;
 
     public static final String msgDelimiter = "<delimiter/>";
 
