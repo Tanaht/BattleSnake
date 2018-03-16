@@ -20,6 +20,7 @@ import butterknife.ButterKnife;
 import fr.istic.mmm.battlesnake.R;
 import fr.istic.mmm.battlesnake.fragments.gameboard.GameboardFragmentMultiViaIp;
 import fr.istic.mmm.battlesnake.fragments.gameboard.GameboardFragmentSolo;
+import fr.istic.mmm.battlesnake.service.InternetService;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -89,7 +90,7 @@ public class ChoixServerClientFragment extends Fragment {
             public void onClick(View view) {
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                builder.setTitle("Indiquer le nombre de joueur");
+                builder.setTitle("Indiquer le nombre de joueur, adresse ip du serveur : "+ InternetService.getIPAddress(true));
                 final EditText input = new EditText(getContext());
                 input.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL);
                 builder.setView(input);

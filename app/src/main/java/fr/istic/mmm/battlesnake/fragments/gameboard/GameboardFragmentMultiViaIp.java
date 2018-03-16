@@ -120,6 +120,7 @@ public class GameboardFragmentMultiViaIp extends GameBoardFragment {
                 e.printStackTrace();
             }
             serverIp = server.getAdresseIp();
+            Log.i(TAG, "adresse ip server: "+serverIp);
         }
 
         Client client = new Client(serverIp, this);

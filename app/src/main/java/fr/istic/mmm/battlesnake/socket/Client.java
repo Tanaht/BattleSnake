@@ -91,7 +91,7 @@ public class Client implements Runnable{
         connectToServer();
         while(!socketServer.isClosed()){
 
-            byte[] bytes = new byte[10000];
+            byte[] bytes = new byte[50000];
             int numberOfBytesRead = 0;
             try {
                 numberOfBytesRead = socketServer.getInputStream().read(bytes);

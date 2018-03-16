@@ -85,7 +85,7 @@ public class ServerPlayerRepresentation implements Runnable {
 
         while(clientSocket.isConnected()){
 
-            byte[] bytes = new byte[4096];
+            byte[] bytes = new byte[50000];
             int numberOfBytesRead = 0;
             try {
                 numberOfBytesRead = clientSocket.getInputStream().read(bytes);

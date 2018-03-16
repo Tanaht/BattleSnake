@@ -1,11 +1,16 @@
 package fr.istic.mmm.battlesnake.socket;
 
 
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
+import android.text.format.Formatter;
 import android.util.Log;
 
 import java.io.IOException;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executors;
@@ -20,7 +25,9 @@ import fr.istic.mmm.battlesnake.model.Game;
 import fr.istic.mmm.battlesnake.model.RoutineMessageContent;
 import fr.istic.mmm.battlesnake.model.cellContent.Apple;
 import fr.istic.mmm.battlesnake.model.cellContent.CellContent;
+import fr.istic.mmm.battlesnake.service.InternetService;
 
+import static android.content.Context.WIFI_SERVICE;
 import static fr.istic.mmm.battlesnake.Constante.TIME_EACH_FRAME_IN_MILISECONDE;
 
 public class Server implements Runnable {
@@ -38,8 +45,13 @@ public class Server implements Runnable {
         this.nbOfPlayer = nbOfPlayer;
         game = new Game();
         serverPlayerRepresentations = new ArrayList<>();
+
         try {
-            serverSocket = new ServerSocket(Constante.SERVER_PORT);
+            InetAddress inetServer = InetAddress.getByName(InternetService.getIPAddress(true));
+            serverSocket = new ServerSocket(Constante.SERVER_PORT, 0, inetServer);
+        } catch (UnknownHostException e){
+            Log.e(TAG, "Server: impossible de récupéré une adresse ip" );
+            e.printStackTrace();
         } catch (IOException e) {
             Log.e(TAG, "Server: impossible de lancer le serveur, port occupé");
             throw new RuntimeException("impossible de lancer le serveur, port occupé");
@@ -71,6 +83,7 @@ public class Server implements Runnable {
 
     @Override
     public void run() {
+
         Log.i(TAG, "serveur lancer adresse ip :"+serverSocket.getInetAddress()+", port :"+serverSocket.getLocalPort());
         try {
             Log.i(TAG, "Attente que les client ce connecte");
