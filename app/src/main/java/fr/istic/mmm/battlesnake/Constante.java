@@ -8,8 +8,8 @@ import fr.istic.mmm.battlesnake.model.Direction;
 import static fr.istic.mmm.battlesnake.model.Direction.*;
 
 public class Constante {
-    public static final int NUMBER_OF_CELL_HEIGHT = 40;
-    public static final int NUMBER_OF_CELL_WIDTH = 30;
+    public static final int NUMBER_OF_CELL_HEIGHT = 25;
+    public static final int NUMBER_OF_CELL_WIDTH = 18;
 
     public static final Cell[][] LIST_POSITION_INITIAL_SNAKE = {
 
@@ -43,7 +43,7 @@ public class Constante {
 
     public static final int SERVER_PORT = 6000;
 
-    public static final int TIME_EACH_FRAME_IN_MILISECONDE = 5000;
+    public static final int TIME_EACH_FRAME_IN_MILISECONDE = 200;
 
     public static final String msgDelimiter = "<delimiter/>";
 

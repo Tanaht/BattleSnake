@@ -110,7 +110,7 @@ public class GameboardFragmentSolo extends GameBoardFragment  {
         Server serv = new Server(1);
         new Thread(serv).start();
 
-        Client client = new Client("0.0.0.0", this);
+        Client client = new Client(serv.getAdresseIp(), this);
         new Thread(client).start();
 
 
