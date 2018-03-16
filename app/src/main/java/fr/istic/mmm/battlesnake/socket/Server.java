@@ -51,6 +51,10 @@ public class Server implements Runnable {
         }
     }
 
+    public String getAdresseIp(){
+        return serverSocket.getInetAddress().getHostAddress();
+    }
+
     private void waitAllPlayerConnected() throws IOException {
         int numberPlayerConnected = 0;
         while(numberPlayerConnected < nbOfPlayer){

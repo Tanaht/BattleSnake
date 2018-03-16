@@ -31,7 +31,7 @@ import fr.istic.mmm.battlesnake.view.CustomViewBoard;
  * Use the {@link GameboardFragmentSolo#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class GameboardFragmentSolo extends Fragment implements GameBoardFragment {
+public class GameboardFragmentSolo extends GameBoardFragment  {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -70,6 +70,7 @@ public class GameboardFragmentSolo extends Fragment implements GameBoardFragment
     private Player player;
 
     public GameboardFragmentSolo() {
+        super();
         // Required empty public constructor
     }
 

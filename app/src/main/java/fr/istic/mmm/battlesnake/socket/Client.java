@@ -14,6 +14,7 @@ import java.util.concurrent.ScheduledExecutorService;
 
 import fr.istic.mmm.battlesnake.Constante;
 import fr.istic.mmm.battlesnake.fragments.gameboard.GameBoardFragment;
+import fr.istic.mmm.battlesnake.fragments.gameboard.GameboardFragmentSolo;
 import fr.istic.mmm.battlesnake.model.Direction;
 import fr.istic.mmm.battlesnake.model.Game;
 import fr.istic.mmm.battlesnake.model.Player;

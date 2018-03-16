@@ -1,17 +1,25 @@
 package fr.istic.mmm.battlesnake.fragments;
 
+import android.app.AlertDialog;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import fr.istic.mmm.battlesnake.R;
+import fr.istic.mmm.battlesnake.fragments.gameboard.GameboardFragmentMultiViaIp;
+import fr.istic.mmm.battlesnake.fragments.gameboard.GameboardFragmentSolo;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -80,13 +88,55 @@ public class ChoixServerClientFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                builder.setTitle("Indiquer le nombre de joueur");
+                final EditText input = new EditText(getContext());
+                input.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL);
+                builder.setView(input);
+                builder.setPositiveButton("Valider", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        int numberOfPlayer = Integer.parseInt(input.getText().toString());
+
+                        FragmentManager manager = getFragmentManager();
+                        FragmentTransaction transaction = manager.beginTransaction();
+
+                        GameboardFragmentMultiViaIp fragment = new GameboardFragmentMultiViaIp();
+
+                        fragment.setServer(true);
+                        fragment.setNbOfPlayer(numberOfPlayer);
+
+                        transaction.replace(R.id.base_layout, fragment);
+                        transaction.commit();
+                    }
+                });
+                builder.show();
             }
         });
 
         boutonJoinServer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                builder.setTitle("Indiqué l'adresse ip du serveur");
+                final EditText input = new EditText(getContext());
+                input.setInputType(InputType.TYPE_CLASS_TEXT);
+                builder.setView(input);
+                builder.setPositiveButton("Valider", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        FragmentManager manager = getFragmentManager();
+                        FragmentTransaction transaction = manager.beginTransaction();
 
+                        GameboardFragmentMultiViaIp fragment = new GameboardFragmentMultiViaIp();
+
+                        fragment.setServerIp(input.getText().toString());
+
+                        transaction.replace(R.id.base_layout, fragment);
+                        transaction.commit();
+                    }
+                });
+                builder.show();
             }
         });
 

@@ -4,16 +4,25 @@ import android.app.Fragment;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import fr.istic.mmm.battlesnake.R;
+import fr.istic.mmm.battlesnake.model.Cell;
 import fr.istic.mmm.battlesnake.model.Direction;
 import fr.istic.mmm.battlesnake.model.Game;
 import fr.istic.mmm.battlesnake.model.Player;
+import fr.istic.mmm.battlesnake.socket.Client;
+import fr.istic.mmm.battlesnake.socket.Server;
 import fr.istic.mmm.battlesnake.view.CustomViewBoard;
 
 /**
@@ -24,7 +33,7 @@ import fr.istic.mmm.battlesnake.view.CustomViewBoard;
  * Use the {@link GameboardFragmentMultiViaIp#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class GameboardFragmentMultiViaIp extends Fragment {
+public class GameboardFragmentMultiViaIp extends GameBoardFragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -38,10 +47,31 @@ public class GameboardFragmentMultiViaIp extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    private CustomViewBoard boardView;
+    @BindView(R.id.boardView) CustomViewBoard boardView;
 
     private Game game;
     private Player player;
+    private boolean isServer = false;
+    private int nbOfPlayer;
+    private String serverIp;
+
+    @BindView(R.id.buttonDown)
+    Button buttonDown;
+    @BindView(R.id.buttonUp)
+    Button buttonUp;
+    @BindView(R.id.buttonLeft)
+    Button buttonLeft;
+    @BindView(R.id.buttonRight)
+    Button buttonRight;
+
+    Handler drawViewHandler = new Handler(Looper.getMainLooper()) {
+        @Override
+        public void handleMessage(Message inputMessage) {
+            Cell[][] cellToDraw = (Cell[][]) inputMessage.obj;
+            boardView.drawBoard(cellToDraw);
+        }
+    };
+
 
     public GameboardFragmentMultiViaIp() {
         // Required empty public constructor
@@ -80,6 +110,54 @@ public class GameboardFragmentMultiViaIp extends Fragment {
         View view = inflater.inflate(R.layout.fragment_gameboard, container, false);
         ButterKnife.bind(this, view);
 
+        if (isServer){
+            Server server = new Server(nbOfPlayer);
+            new Thread(server).start();
+
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            serverIp = server.getAdresseIp();
+        }
+
+        Client client = new Client(serverIp, this);
+        new Thread(client).start();
+
+
+
+        buttonUp.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                client.goToUp();
+                return false;
+            }
+        });
+
+        buttonDown.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                client.goToDown();
+                return false;
+            }
+        });
+
+        buttonLeft.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                client.goToLeft();
+                return false;
+            }
+        });
+
+        buttonRight.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                client.goToRight();
+                return false;
+            }
+        });
 
         // Inflate the layout for this fragment
         return view;
@@ -135,6 +213,25 @@ public class GameboardFragmentMultiViaIp extends Fragment {
 
     public void setBoardView(CustomViewBoard boardView) {
         this.boardView = boardView;
+    }
+
+    public void setServer(boolean server) {
+        isServer = server;
+    }
+
+    public void setNbOfPlayer(int nbOfPlayer) {
+        this.nbOfPlayer = nbOfPlayer;
+    }
+
+
+    public void handlerMainThreadForDrawView(Cell[][] cells){
+        int neSertARien = 0;
+        Message completeMessage =
+                drawViewHandler.obtainMessage(neSertARien,cells);
+        completeMessage.sendToTarget();
+    }
+    public void setServerIp(String serverIp) {
+        this.serverIp = serverIp;
     }
 
     /**
