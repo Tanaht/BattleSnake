@@ -13,7 +13,7 @@ import java.util.concurrent.Future;
 import java.util.concurrent.ScheduledExecutorService;
 
 import fr.istic.mmm.battlesnake.Constante;
-import fr.istic.mmm.battlesnake.fragments.gameboard.GameboardFragmentSolo;
+import fr.istic.mmm.battlesnake.fragments.gameboard.GameBoardFragment;
 import fr.istic.mmm.battlesnake.model.Direction;
 import fr.istic.mmm.battlesnake.model.Game;
 import fr.istic.mmm.battlesnake.model.Player;
@@ -31,14 +31,14 @@ public class Client implements Runnable{
     private ScheduledExecutorService executorService = Executors.newScheduledThreadPool(Integer.MAX_VALUE);
 
     private String ipServer;
-    private GameboardFragmentSolo objForHandlerMainThread;
+    private GameBoardFragment objForHandlerMainThread;
     private Socket socketServer;
 
     private Game game;
     private Player player;
     private int playerId;
 
-    public Client(String ipServer, GameboardFragmentSolo objForHandlerMainThread){
+    public Client(String ipServer, GameBoardFragment objForHandlerMainThread){
         this.ipServer = ipServer;
         this.objForHandlerMainThread = objForHandlerMainThread;
         game = new Game();

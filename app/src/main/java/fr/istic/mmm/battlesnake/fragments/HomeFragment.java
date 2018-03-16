@@ -43,7 +43,7 @@ public class HomeFragment extends Fragment {
 
     @BindView(R.id.playButton) Button playButton;
 
-    @BindView(R.id.playButtonMulti) Button playButtonMulti;
+    @BindView(R.id.playButtonMulti) Button playButtonMultiAvecIp;
 
 
     private OnFragmentInteractionListener mListener;
@@ -128,7 +128,7 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        playButtonMulti.setOnClickListener(new View.OnClickListener() {
+        playButtonMultiAvecIp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Log.i(Tag,"button play multi pressed");
@@ -136,7 +136,7 @@ public class HomeFragment extends Fragment {
                 FragmentManager manager = getFragmentManager();
                 FragmentTransaction transaction = manager.beginTransaction();
 
-                transaction.replace(R.id.base_layout, new SearchGameFragment());
+                transaction.replace(R.id.base_layout, new ChoixServerClientFragment());
                 transaction.commit();
             }
         });

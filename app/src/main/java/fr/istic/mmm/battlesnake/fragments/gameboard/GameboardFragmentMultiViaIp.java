@@ -19,12 +19,12 @@ import fr.istic.mmm.battlesnake.view.CustomViewBoard;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link GameboardFragmentMulti.OnFragmentInteractionListener} interface
+ * {@link GameboardFragmentMultiViaIp.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link GameboardFragmentMulti#newInstance} factory method to
+ * Use the {@link GameboardFragmentMultiViaIp#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class GameboardFragmentMulti extends Fragment {
+public class GameboardFragmentMultiViaIp extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -43,7 +43,7 @@ public class GameboardFragmentMulti extends Fragment {
     private Game game;
     private Player player;
 
-    public GameboardFragmentMulti() {
+    public GameboardFragmentMultiViaIp() {
         // Required empty public constructor
     }
 
@@ -56,8 +56,8 @@ public class GameboardFragmentMulti extends Fragment {
      * @return A new instance of fragment GameboardFragmentSolo.
      */
     // TODO: Rename and change types and number of parameters
-    public static GameboardFragmentMulti newInstance(String param1, String param2) {
-        GameboardFragmentMulti fragment = new GameboardFragmentMulti();
+    public static GameboardFragmentMultiViaIp newInstance(String param1, String param2) {
+        GameboardFragmentMultiViaIp fragment = new GameboardFragmentMultiViaIp();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -80,16 +80,6 @@ public class GameboardFragmentMulti extends Fragment {
         View view = inflater.inflate(R.layout.fragment_gameboard, container, false);
         ButterKnife.bind(this, view);
 
-        //TODO récupéré l'objet board du serveur a la place
-        game = new Game();
-
-        //TODO récupéré l'objet joueur depuis la socket
-        player = game.addNewPlayer();
-        game.addNewPlayer();
-
-        game.startGame();
-
-        boardView.drawBoard(game.getBoardCells());
 
         // Inflate the layout for this fragment
         return view;

@@ -11,5 +11,5 @@
     <string name="profile">Profil</string>
     <string name="home">Accueil</string>
     <string name="textButtonPlay1Joueur">1 joueur</string>
-    <string name="textButtonPlayMultiJoueur">multi joueur</string>
+    <string name="textButtonPlayMultiJoueur">multi joueur via adresse ip</string>
 </resources>

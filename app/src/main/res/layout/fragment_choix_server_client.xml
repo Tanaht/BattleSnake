@@ -1,0 +1,34 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="fr.istic.mmm.battlesnake.fragments.ChoixServerClientFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <Button
+            android:id="@+id/multiViaIpCreerServerButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Créer serveur"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/multiViaIpJoinServer"
+            android:layout_width="match_parent"
+            android:layout_height="51dp"
+            android:layout_marginTop="8dp"
+            android:text="Rejoindre une partie"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/multiViaIpCreerServerButton" />
+    </android.support.constraint.ConstraintLayout>
+</FrameLayout>
