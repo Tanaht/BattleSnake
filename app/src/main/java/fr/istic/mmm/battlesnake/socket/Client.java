@@ -7,6 +7,8 @@ import com.google.gson.Gson;
 
 import java.io.IOException;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
@@ -19,11 +21,13 @@ import fr.istic.mmm.battlesnake.model.Direction;
 import fr.istic.mmm.battlesnake.model.Game;
 import fr.istic.mmm.battlesnake.model.Player;
 import fr.istic.mmm.battlesnake.socket.Message.fromClient.MessageFromClient;
+import fr.istic.mmm.battlesnake.socket.Message.fromClient.MessageSendDirection;
 import fr.istic.mmm.battlesnake.socket.Message.fromServer.MessageFromServer;
 import fr.istic.mmm.battlesnake.socket.Message.fromServer.MessageSendGameRoutineMessage;
 import fr.istic.mmm.battlesnake.socket.Message.fromServer.MessageSendIdPlayer;
 import fr.istic.mmm.battlesnake.socket.Message.fromServer.MessageSendNumberOfPlayer;
 
+import static fr.istic.mmm.battlesnake.Constante.msgDelimiter;
 import static fr.istic.mmm.battlesnake.socket.Message.fromClient.TypeMessageClientToServer.NEXT_DIRECTION_PLAYER;
 
 public class Client implements Runnable{
@@ -50,7 +54,8 @@ public class Client implements Runnable{
         Log.i(TAG,"client : direction send to server");
         return executorService.submit(()->{
             Gson gson = new Gson();
-            byte[] bytes = gson.toJson(new MessageFromClient(NEXT_DIRECTION_PLAYER,direction)).getBytes();
+            byte[] bytes = (gson.toJson(new MessageSendDirection(direction))
+                    +msgDelimiter).getBytes();
             try {
                 socketServer.getOutputStream().write(bytes);
             } catch (IOException e) {
@@ -104,48 +109,52 @@ public class Client implements Runnable{
 
             String jsonObject = new String(bytes,0,numberOfBytesRead);
 
-            MessageFromServer<?> msg = gson.fromJson(jsonObject, MessageFromServer.class);
+            String[] listJsonMsg = jsonObject.split(msgDelimiter);
 
-            switch (msg.getMsgFromServer()){
-                case NUMBER_OF_PLAYER:
-                    MessageSendNumberOfPlayer numberOfPlayerMsg = gson.fromJson(jsonObject, MessageSendNumberOfPlayer.class);
+            for (int i = 0; i <listJsonMsg.length ; i++){
 
-                    for (int i = 0;i<numberOfPlayerMsg.getData();i++){
-                        if (i == playerId){
-                            player = game.addNewPlayer();
-                        }else{
-                            game.addNewPlayer();
+                MessageFromServer<?> msg = gson.fromJson(listJsonMsg[i], MessageFromServer.class);
+
+                switch (msg.getMsgFromServer()){
+                    case NUMBER_OF_PLAYER:
+                        MessageSendNumberOfPlayer numberOfPlayerMsg = gson.fromJson(listJsonMsg[i], MessageSendNumberOfPlayer.class);
+                        for (int j = 0;j<numberOfPlayerMsg.getData();j++){
+                            if (j == playerId){
+                                player = game.addNewPlayer();
+                            }else{
+                                game.addNewPlayer();
+                            }
                         }
-                    }
 
-                    break;
-                case PLAYER_ID:
-                    MessageSendIdPlayer idPlayerMsg = gson.fromJson(jsonObject, MessageSendIdPlayer.class);
-                    playerId = idPlayerMsg.getData();
-                    break;
+                        break;
+                    case PLAYER_ID:
+                        MessageSendIdPlayer idPlayerMsg = gson.fromJson(listJsonMsg[i], MessageSendIdPlayer.class);
+                        playerId = idPlayerMsg.getData();
+                        break;
 
-                case GAME_ROUTINE_MESSAGE:
-                    MessageSendGameRoutineMessage routineMsg = gson.fromJson(jsonObject, MessageSendGameRoutineMessage.class);
-                    List<Direction> directions = routineMsg.getData().getNewPlayerDirection();
+                    case GAME_ROUTINE_MESSAGE:
+                        MessageSendGameRoutineMessage routineMsg = gson.fromJson(listJsonMsg[i], MessageSendGameRoutineMessage.class);
+                        List<Direction> directions = routineMsg.getData().getNewPlayerDirection();
 
-                    for (int i = 0; i < directions.size() ; i++) {
-                        game.moveSnakePlayer(directions.get(i),i);
-                    }
+                        for (int j = 0; j < directions.size() ; j++) {
+                            game.moveSnakePlayer(directions.get(j),j);
+                        }
 
-                    int x = routineMsg.getData().getApplePositionX();
-                    int y = routineMsg.getData().getApplePositionY();
-                    game.setApple(x,y);
+                        int x = routineMsg.getData().getApplePositionX();
+                        int y = routineMsg.getData().getApplePositionY();
+                        game.setApple(x,y);
 
-                    objForHandlerMainThread.handlerMainThreadForDrawView(game.getBoardCells());
-                    break;
+                        objForHandlerMainThread.handlerMainThreadForDrawView(game.getBoardCells());
+                        break;
 
-                case PLAYER_WIN:
-                    break;
-                case PLAYER_LOSE:
-                    break;
-                default:
-                    Log.e(TAG, "client : msg from server not implemented :"+msg.getMsgFromServer());
-                    break;
+                    case PLAYER_WIN:
+                        break;
+                    case PLAYER_LOSE:
+                        break;
+                    default:
+                        Log.e(TAG, "client : msg from server not implemented :"+msg.getMsgFromServer());
+                        break;
+                }
             }
         }
     }

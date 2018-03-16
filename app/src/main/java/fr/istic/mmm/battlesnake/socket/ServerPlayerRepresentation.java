@@ -17,6 +17,8 @@ import fr.istic.mmm.battlesnake.socket.Message.fromServer.MessageSendGameRoutine
 import fr.istic.mmm.battlesnake.socket.Message.fromServer.MessageSendIdPlayer;
 import fr.istic.mmm.battlesnake.socket.Message.fromServer.MessageSendNumberOfPlayer;
 
+import static fr.istic.mmm.battlesnake.Constante.msgDelimiter;
+
 public class ServerPlayerRepresentation implements Runnable {
     private static final String TAG = "b.s.ServerPlayer";
 
@@ -39,7 +41,9 @@ public class ServerPlayerRepresentation implements Runnable {
     public void sendGameRoutine(RoutineMessageContent routineData){
         Gson gson = new Gson();
         try {
-            clientSocket.getOutputStream().write(gson.toJson(new MessageSendGameRoutineMessage(routineData)).getBytes());
+            clientSocket.getOutputStream().write(
+                    (gson.toJson(new MessageSendGameRoutineMessage(routineData))+msgDelimiter)
+                            .getBytes());
         } catch (IOException e) {
             Log.e(TAG, "server : error when send direction to player" );
             e.printStackTrace();
@@ -49,7 +53,9 @@ public class ServerPlayerRepresentation implements Runnable {
     public void sendNumberOfPlayerInGame(int nb) {
         Gson gson = new Gson();
         try {
-            clientSocket.getOutputStream().write(gson.toJson(new MessageSendNumberOfPlayer(nb)).getBytes());
+            clientSocket.getOutputStream().write(
+                    (gson.toJson((new MessageSendNumberOfPlayer(nb))) + msgDelimiter)
+                            .getBytes());
         } catch (IOException e) {
             Log.e(TAG, "server : error when try to send number of player in game");
             e.printStackTrace();
@@ -60,7 +66,9 @@ public class ServerPlayerRepresentation implements Runnable {
         Gson gson = new Gson();
         MessageSendIdPlayer msg = new MessageSendIdPlayer(snakePlayer.getPlayerId());
         try {
-            clientSocket.getOutputStream().write(gson.toJson(msg).getBytes());
+            clientSocket.getOutputStream().write(
+                    (gson.toJson(msg)+msgDelimiter)
+                            .getBytes());
         } catch (IOException e) {
             Log.e(TAG, "server : Erreur lors de la transmission de l'id du joueur" );
             e.printStackTrace();
@@ -96,20 +104,26 @@ public class ServerPlayerRepresentation implements Runnable {
 
             Gson gson = new Gson();
 
+
+
             String jsonObject = new String(bytes,0,numberOfBytesRead);
 
-            MessageFromClient<?> msg = gson.fromJson(jsonObject, MessageFromClient.class);
+            String[] listJsonMsg = jsonObject.split(msgDelimiter);
 
-            switch (msg.getMsgFromClient()){
-                case NEXT_DIRECTION_PLAYER:
-                    MessageSendDirection msgCorrectedParsed = gson.fromJson(jsonObject, MessageSendDirection.class);
-                    setNextDirection(msgCorrectedParsed.getData());
-                    Log.i(TAG, "server : new direction receive from client");
-                    break;
+            for (int i = 0; i <listJsonMsg.length ; i++) {
+                MessageFromClient<?> msg = gson.fromJson(listJsonMsg[i], MessageFromClient.class);
 
-                default:
-                    Log.e(TAG, "server : msg from client not implemented :"+msg.getMsgFromClient());
-                    break;
+                switch (msg.getMsgFromClient()){
+                    case NEXT_DIRECTION_PLAYER:
+                        MessageSendDirection msgCorrectedParsed = gson.fromJson(listJsonMsg[i], MessageSendDirection.class);
+                        setNextDirection(msgCorrectedParsed.getData());
+                        Log.i(TAG, "server : new direction receive from client");
+                        break;
+
+                    default:
+                        Log.e(TAG, "server : msg from client not implemented :"+msg.getMsgFromClient());
+                        break;
+                }
             }
         }
     }

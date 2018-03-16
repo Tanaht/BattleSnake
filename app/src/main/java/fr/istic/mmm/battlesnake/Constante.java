@@ -33,5 +33,7 @@ public class Constante {
 
     public static final int TIME_EACH_FRAME_IN_MILISECONDE = 500;
 
+    public static final String msgDelimiter = "<delimiter/>";
+
 
 }

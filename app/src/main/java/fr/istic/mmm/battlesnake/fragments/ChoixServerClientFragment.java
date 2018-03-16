@@ -90,7 +90,7 @@ public class ChoixServerClientFragment extends Fragment {
             public void onClick(View view) {
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                builder.setTitle("Indiquer le nombre de joueur, adresse ip du serveur : "+ InternetService.getIPAddress(true));
+                builder.setTitle("adresse ip du serveur : "+ InternetService.getIPAddress(true)+". Indiqué nb joueur");
                 final EditText input = new EditText(getContext());
                 input.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL);
                 builder.setView(input);
