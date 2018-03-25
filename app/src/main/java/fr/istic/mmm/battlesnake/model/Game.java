@@ -71,5 +71,16 @@ public class Game {
         return board.getApplePosition();
     }
 
+    public Player getPlayerFromId(Integer playerId){
+        return players.get(playerId);
+    }
+
+    public void playerLose(Integer playerId){
+        Player playerWhoLose = players.get(playerId);
+        playerWhoLose.setLose(true);
+        playerWhoLose.removePlayerFromBoard();
+
+    }
+
 
 }

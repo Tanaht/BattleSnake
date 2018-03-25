@@ -111,7 +111,7 @@ public class Server implements Runnable {
         }
 
 
-        //TODO attendre que tout les joueurs sois prets
+        //TODO attendre que tout les joueurs ai reçu info
         try {
             Thread.sleep(500);
         } catch (InterruptedException e) {
@@ -129,13 +129,13 @@ public class Server implements Runnable {
     }
 
     public void gameRoutine() {
-        List<Direction> listPlaterDirection = new ArrayList<>();
+        List<Direction> listPlayerDirection = new ArrayList<>();
 
         boolean appleEaten = false;
         for (ServerPlayerRepresentation client : serverPlayerRepresentations) {
             Direction directionPlayer = client.getNextDirection();
             CellContent content = game.moveSnakePlayer(directionPlayer, client.getIdPlayer());
-            listPlaterDirection.add(directionPlayer);
+            listPlayerDirection.add(directionPlayer);
 
             if (content instanceof Apple){
                 appleEaten = true;
@@ -150,7 +150,7 @@ public class Server implements Runnable {
 
 
         RoutineMessageContent routineMsg = new RoutineMessageContent(
-                listPlaterDirection,
+                listPlayerDirection,
                 applePosition.getCoordX(),
                 applePosition.getCoordY()
         );

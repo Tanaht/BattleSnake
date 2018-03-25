@@ -20,9 +20,12 @@ import fr.istic.mmm.battlesnake.fragments.gameboard.GameboardFragmentSolo;
 import fr.istic.mmm.battlesnake.model.Direction;
 import fr.istic.mmm.battlesnake.model.Game;
 import fr.istic.mmm.battlesnake.model.Player;
+import fr.istic.mmm.battlesnake.model.cellContent.CellContent;
+import fr.istic.mmm.battlesnake.model.cellContent.Wall;
 import fr.istic.mmm.battlesnake.socket.Message.fromClient.MessageFromClient;
 import fr.istic.mmm.battlesnake.socket.Message.fromClient.MessageSendDirection;
 import fr.istic.mmm.battlesnake.socket.Message.fromServer.MessageFromServer;
+import fr.istic.mmm.battlesnake.socket.Message.fromServer.MessagePlayerLose;
 import fr.istic.mmm.battlesnake.socket.Message.fromServer.MessageSendGameRoutineMessage;
 import fr.istic.mmm.battlesnake.socket.Message.fromServer.MessageSendIdPlayer;
 import fr.istic.mmm.battlesnake.socket.Message.fromServer.MessageSendNumberOfPlayer;
@@ -137,7 +140,12 @@ public class Client implements Runnable{
                         List<Direction> directions = routineMsg.getData().getNewPlayerDirection();
 
                         for (int j = 0; j < directions.size() ; j++) {
-                            game.moveSnakePlayer(directions.get(j),j);
+                            if (!game.getPlayerFromId(j).isLose()){
+                                CellContent cellEaten = game.moveSnakePlayer(directions.get(j),j);
+                                if (cellEaten instanceof Wall){
+
+                                }
+                            }
                         }
 
                         int x = routineMsg.getData().getApplePositionX();
@@ -148,8 +156,11 @@ public class Client implements Runnable{
                         break;
 
                     case PLAYER_WIN:
+
                         break;
                     case PLAYER_LOSE:
+                        MessagePlayerLose msgPlayerLose = gson.fromJson(listJsonMsg[i], MessagePlayerLose.class);
+
                         break;
                     default:
                         Log.e(TAG, "client : msg from server not implemented :"+msg.getMsgFromServer());

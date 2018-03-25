@@ -67,4 +67,9 @@ public class Snake extends CellContent {
         return cellContentToReturn;
     }
 
+    public void removeSnakeFromBoard() {
+        for (Cell cell : cellList){
+            cell.setContent(new EmptyCell());
+        }
+    }
 }
